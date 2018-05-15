@@ -24,29 +24,69 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 int arr[1000005];
 vector <char> num;
+string add(string str)
+{
+	int carry=1;
+	string newstr="";
+	for(int i=str.length()-1;i>=0;i--)
+	{
+		
+		if(str[i]=='1' && carry==1)
+		{
+			newstr=newstr+"0";
+			carry=1;
+		}
+		else if(str[i]=='1' && carry==0)
+		{
+			newstr=newstr+"1";
+			carry=0;
+		}
+		else if(str[i]=='0' && carry==1)
+		{
+			carry=0;
+			newstr=newstr+"1";
+		}
+		else
+		{
+			newstr=newstr+"0";
+			carry=0;
+		}
+		//cout<<"###"<<newstr<<endl;
+	}
+	//
+	if(carry==1)
+	{
+		newstr=newstr+"1";
+	}
+	reverse(newstr.begin(),newstr.end());
+	return newstr;
+}
 charan
 {
 	fast;
 	string str;
-	cin>>str;ll count0=0;ll count1=0;
-	if(str=="1")
+	cin>>str;
+	ll count=0;
+	while(str!="1")
 	{
-		cout<<"0";
-		return 0;
-	}
-	for(int i=0;i<str.length();i++)
-	{
-
-		if(str[i]=='0')
-			count0+=(i+1);
+		//cout<<endl<<str<<endl;
+		if(str[str.length()-1]=='0')
+		{
+			int l=str.length();
+			string str1=str.substr(0,l-1);
+			// cout<<str1<<endl;
+			// break;
+			str=str1;
+		}
 		else
-			count1+=(i+1);
+		{
+			string str1=add(str);
+			str=str1;
+		}
+		count++;
 	}
-	//cout<<count0<<" "<<count1<<endl;
-	//cout<<min(count0,count1);	
-	if(count1<count0)
-		cout<<count1;
-	else
-		cout<<count0;
+	// str=add("10111");
+	// cout<<str;
+	cout<<count;
 	return 0;
 }

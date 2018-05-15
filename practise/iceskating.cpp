@@ -27,7 +27,7 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
@@ -37,49 +37,54 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;cin>>n;
+	ll n;
+	cin>>n;
 	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	bool visited[n+1];
+	ll x,y;
+	set <pii> overall;
+	ms0(visited,false);
 	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		cin>>x>>y;
+		arr[i]=mp(x,y);
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
+	overall.insert(arr[1]);
+	visited[1]=true;
+	int ans=0;
+	while(overall.size()!=n)
+	{
+		int temp=overall.size();
+		std::set<pii>::iterator it;
+		for (it = overall.begin(); it != overall.end(); ++it)
 		{
-			if(arr[i].ff!=brr[i].ff)
+		   // u_long f = *it; // Note the "*" here
+			for(int i=1;i<=n;i++)
 			{
-				q.pb(arr[i]);
+				if(arr[i].ff==(*it).ff||arr[i].ss==(*it).ss)
+				{
+					visited[i]=true;
+					overall.insert(arr[i]);
+				}
 			}
 		}
-	if(q.size()<=1)
-	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
-	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
+		if(overall.size()==temp)
 		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
+			ans++;
+			for(int i=1;i<=n;i++)
 			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
+				if(visited[i]==false)
+				{
+					overall.insert(arr[i]);
+					break;
+				}
 			}
 		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
-	}
+		else
+		{
+
+		}
+
+	}cout<<ans;
 	return 0;
 }

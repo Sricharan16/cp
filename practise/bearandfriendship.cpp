@@ -27,59 +27,74 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+vi adj[150001];
+ll x,y;
+bool check[150001];
+bool checkedge(int i,int j)
+{
+	if(j==-1)
+		return 1; 
+	else
+	{
+		for(int k=0;k<adj[i].size();k++)
+		{
+			//cout<<"from here"<<adj[i][k]<<" "<<j<<endl;
+			if(j==adj[i][k])
+				return 1;
+		}
+		return 0;
+	}
+}
+void DFS(int i,int x){
+	cout<<"#"<<i<<" "<<x<<endl;
+
+		check[i]=true;
+		for(int j=0;j<adj[i].size();j++)
+		{
+			if(check[adj[i][j]]==false)
+			{
+				//cout<<"##"<<adj[i][j]<<" "<<x<<endl;
+				if(checkedge(adj[i][j],i))
+				DFS(adj[i][j],i);
+				else
+				{
+					//cout<<"######"<<adj[i][j]<<" "<<x<<endl;
+					cout<<"NO";
+					exit(0);
+				}
+			}
+		}
+	
+}
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	ll n,m;
+	cin>>n>>m;
+	ms0(check,false);
+	for(int i=1;i<=m;i++)
+	{
+		cin>>x>>y;
+		adj[x].pb(y);
+		adj[y].pb(x);
+	}
 	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		ms0(check,false);
+		// for(int j=0;j<adj[1].size();j++)
+		// {
+		// 	cout<<adj[1][j]<<" ";
+		// }cout<<endl;
+		DFS(i,-1);
+	
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
-	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
-	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
-	}
+	cout<<"YES";
 	return 0;
 }

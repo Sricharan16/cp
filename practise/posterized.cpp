@@ -34,52 +34,43 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+int code[257];
+int sizo[257];
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	ll n,k;cin>>n>>k;
+	ms0(code,257,-1);
+	ms0(sizo,257,0);
+	ll arr[n+1];
 	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		cin>>arr[i];
 	}
-	sort(brr+1,brr+n+1);
 	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		if(code[arr[i]]==-1)
+		{
+		for(int j=arr[i];j>=max(0,arr[i]-k+1);j--)
+			{
+				if(code[j]!=-1)
+				{
+					continue;
+				}
+				
+			}
+			//if no such element is found what to do 
+			for()
+		}
 	}
-	else
+	for(int i=1;i<=n;i++)
 	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		cout<<code[arr[i]]<<" ";
+	}
+	cout<<endl;
+	for(int i=0;i<=10;i++)
+	{
+		cout<<i<<" "<<code[i]<<endl;
 	}
 	return 0;
 }

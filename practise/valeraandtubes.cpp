@@ -27,59 +27,80 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+
+ll n,m,k;
+ll sum=0;
+bool visited[301][301];
+void dfs(int i,int j,int x,int y,int p)
+{
+	if(visited[i][j]==true)
+		return;
+	else
+	{
+		cout<<i<<" "<<j<<" ";
+		visited[i][j]=true;
+		sum++;
+		if(i-1>=1 && !(x==i-1 && y==j) && sum<p)
+			dfs(i-1,j,i,j,p);
+		if(i+1<=n && !(x==i+1 && y==j) && sum<p)
+			dfs(i+1,j,i,j,p);
+		if(j-1>=1 && !(x==i && y==j-1) && sum<p)
+			dfs(i,j-1,i,j,p);
+		if(j+1<=m && !(x==i && y==j+1) && sum<p)
+			dfs(i,j+1,i,j,p);
+	}
+	
+}
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
-	for(int i=1;i<=n;i++)
+	cin>>n>>m;
+	cin>>k;
+	int temp=k;
+	int count=(n*m)/k;
+	int p,q;p=1;q=1;
+	int lli=count+(n*m)%k;
+	for(int i=1;i<=(((n*m)-lli)/count);i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		cout<<count<<" ";
+		int flags=0;
+		for(p=1;p<=n && flags==0;p++)
+			for(q=1;q<=m;q++)
+			{
+				sum=0;
+				if(visited[p][q]==false)
+				{
+					dfs(p,q,-1,-1,count);
+					flags=1;
+					//p--;
+					break;
+				}
+			}
+		cout<<endl;
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
+	
+	for(int i=count;i<=count;i++)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
-	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
+		//cout<<"here";
+		cout<<lli<<" ";
+		for(int p=1;p<=n;p++)
+			for(int q=1;q<=m;q++)
 			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
+				sum=0;
+				if(visited[p][q]==false)
+				{
+					dfs(p,q,-1,-1,lli);
+					break;
+				}
 			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		cout<<endl;
 	}
 	return 0;
 }

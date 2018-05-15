@@ -27,7 +27,7 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
@@ -37,49 +37,58 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	ll n,m;cin>>n>>m;
+	ll d;
+	cin>>d;
+	int arr[n+1][m+1];
+	cin>>arr[1][1];
+	int temp=arr[1][1]%d;
+	int flags=0;
 	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
-	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
 		{
-			if(arr[i].ff!=brr[i].ff)
+			if(i==1 && j==1)
 			{
-				q.pb(arr[i]);
+				continue;
 			}
+			cin>>arr[i][j];
+			if(arr[i][j]%d!=temp)
+				flags=1;
 		}
-	if(q.size()<=1)
+	}
+	if(flags==1)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		cout<<"-1";
+		return 0;
 	}
 	else
 	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
+		int brr[n*m+1];
+		int j=1;
+		for(int i=1;i<=n;i++)
 		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
+			for(int k=1;k<=m;k++)
 			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
+				brr[j]=arr[i][k];
+				j++;
 			}
 		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		sort(brr+1,brr+(n*m)+1);
+		temp=brr[(n*m)/2];
+		ll ans=0;
+		for(int i=1;i<=n*m;i++)
+		{
+			ans+=(abs(brr[i]-temp))/d;
+		}
+		int mini=ans;
+		temp=brr[(n*m+1)/2];
+		 ans=0;
+		for(int i=1;i<=n*m;i++)
+		{
+			ans+=(abs(brr[i]-temp))/d;
+		}
+		cout<<min(ans,mini);
 	}
 	return 0;
 }

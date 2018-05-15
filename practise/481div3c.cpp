@@ -37,49 +37,32 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
-	for(int i=1;i<=n;i++)
-	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+	ll n,m;cin>>n>>m;
+	vector<long long> arr(n+1);
+	vector<long long> brr(m+1);
+	f(i,1,n+1)cin>>arr[i];
+	f(i,1,m+1)cin>>brr[i];
+	vector<long long> crr(n+1);
+	crr[1]=1;
+	f(i,2,n+1){
+		crr[i]=crr[i-1]+arr[i-1];
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
+	// f(i,1,n+1){
+	// 	cout<<crr[i]<<" ";
+	// }cout<<endl;
+	for(int i=1;i<=m;i++)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
-	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		ll x=brr[i];
+		std::vector<long long>::iterator low;
+  		low=std::lower_bound (crr.begin(), crr.end(),x);
+  		if(crr[low-crr.begin()]==x)
+  		{
+  			cout<<low-crr.begin()<<" 1"<<endl;
+  		}
+  		else
+  		{
+  			cout<<low-crr.begin()-1<<" "<<x-crr[low-crr.begin()-1]+1<<endl;
+  		}
 	}
 	return 0;
-}
+}	

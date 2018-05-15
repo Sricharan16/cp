@@ -37,49 +37,18 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
-	for(int i=1;i<=n;i++)
+	ll t,s,x;
+	cin>>t>>s>>x;
+	if(x==t+1)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		cout<<"NO";
+		exit(0);
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
+	else if(((x-t)%s==0 || (x-t)%s==1) && (x-t)>=0)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		cout<<"YES";
+		return 0;
 	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
-	}
+	cout<<"NO";
 	return 0;
 }

@@ -27,59 +27,44 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+ll f[100001];
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	ms0(f,0);
+	ll n;ll x;
+	cin>>n;
 	for(int i=1;i<=n;i++)
 	{
 		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		f[x]++;
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
+	if(n==1 ||f[1]==n)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		cout<<"1";
+	
+		return 0;
 	}
-	else
+	ll start[100001];
+	ms0(start,0);
+	for(int i=2;i<=100000;i++)
 	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		for(int j=i*1;j<=100000;j+=i)
+			start[i]+=f[j];
 	}
+	ll maxi=0;
+	for(int i=1;i<=100000;i++)
+		maxi=max(start[i],maxi);
+	//for(int i=1;i<=n;i++)
+	//	cout<<start[i]<<" ";
+	//cout<<endl;
+	cout<<maxi;
 	return 0;
 }

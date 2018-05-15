@@ -34,52 +34,64 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+ll a[100001],b[100001];
+int dx[]={-1,0,1};
+ll n;
+int dy[]={-1,0,1};
+ll ans=inf;
+void check()
+{
+	for(int i=0;i<3;i++)
+	{
+		for(int j=0;j<3;j++)
+		{
+			ll x=a[1]+dx[i];
+			ll y=a[2]+dy[j];
+			ll diff=y-x;
+			b[1]=x;
+			b[2]=y;
+			//cout<<diff<<" "<<b[1]<<" "<<b[2]<<endl;
+			ll res=0;
+			int flags=0;
+			for(int k=3;k<=n;k++)
+			{
+				if(abs(a[k]-b[k-1]-diff)>1)
+					flags=1;
+				else
+				{
+					b[k]=b[k-1]+diff;
+				}
+				res+=abs(a[k]-b[k-1]-diff);
+			}
+			if(flags==0)
+			{
+			res+=(abs(dx[i])+abs(dy[j]));
+			ans=min(ans,res);
+			}
+
+		}
+	}
+}
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	cin>>n;
 	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		cin>>a[i];
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
+	if(n<=2)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		cout<<"0";
+		return 0;
 	}
-	else
+	else 
 	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		check();
+		if(ans!=inf)
+		cout<<ans<<endl;
+		else
+			cout<<"-1"<<endl;
 	}
 	return 0;
 }

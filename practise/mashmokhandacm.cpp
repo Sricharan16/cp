@@ -27,59 +27,61 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+ll dp[2001][2001];
+vi factors[2001];
+void factorization(int i)
+{
+	for(int j=1;j<=sqrt(i);j++)
+	{
+		if(i%j==0)
+		{
+			factors[i].pb(j);
+			if(i/j!=j)
+				factors[i].pb(i/j);
+		}
+	}
+}
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	ms0(dp,0);
+	ll n,k;//dp[i][j] represents no of good sequences of length i ending in number j
+	cin>>n>>k;
+	//n=max(n,k);
+	for(int i=1;i<=max(n,k);i++)
+	{
+		dp[i][1]=1;
+		dp[1][i]=1;
+		factorization(i);
+	}
+	//dp[i][j]= sum dp[i-1][x] such that x is a factor of j
+	for(int i=2;i<=k;i++)
+	{
+		for(int p=2;p<=n;p++)
+		for(int j=0;j<factors[p].size();j++)
+		{
+			dp[i][p]=(dp[i-1][factors[p][j]]+dp[i][p])%mod;
+		}
+	}
+	ll ans=0;
 	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		ans=(ans+dp[k][i])%mod;
+		//gdb(ans);
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
-	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
-	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
-	}
+	// for(int i=1;i<=max(n,k);i++)
+	// {
+	// 	for(int j=1;j<=max(n,k);j++)
+	// 		cout<<dp[i][j]<<" ";
+	// 	cout<<endl<<"#";
+	// }
+	cout<<ans%mod;
 	return 0;
 }

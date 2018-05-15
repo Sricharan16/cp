@@ -27,59 +27,62 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+pair<char,char> check(string str1,string str2)
+{
+	if (str1==str2.substr(0,str1.length())) {
+   return mp('A','A');
+}
+   else 
+   {
+   	for(int i=0;i<min(str1.length(),str2.length());i++)
+   	{
+   		if(str1[i]!=str2[i])
+   			return str1[i];
+   	}
+   	int temp=min(str1.length(),str2.length());
+   	return str1[temp];
+   }
+}
 charan
 {
 	fast;
 	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
-	for(int i=1;i<=n;i++)
+	string s[101];
+	f(i,1,n+1)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		cin>>s[i];
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
+	std::vector<char> v;
+	f(i,1,n)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		if(check(s[i],s[i+1])=='A')
+		{
+			//ignore
+		}
+		else
+		{
+			v.pb(check(s[i],s[i+1]));
+		}
+	}
+	if(n>=1)
+	if(s[n]==s[n-1].substr(0,s[n].length()) && s[n]!=s[n-1])
+		{cout<<"Impossible";return 0;}
+	if(s[n]==s[n-1])
+	{
+
 	}
 	else
 	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		v.pb(check(s[n],s[n-1]));
 	}
+	for(int i=0;i<v.size();i++)
+		cout<<v[i]<<" ";
 	return 0;
 }

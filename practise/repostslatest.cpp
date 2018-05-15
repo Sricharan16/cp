@@ -27,59 +27,60 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+pair<string,string> s[201];
+set <string> overall;
 charan
-{
+{//an a question so brute force also worked 
 	fast;
 	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	string p,q,r;
+
 	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		cin>>p>>q>>r;
+		transform(p.begin(),p.end(),p.begin(),::tolower);
+		transform(r.begin(),r.end(),r.begin(),::tolower);
+		s[i].ff=p;
+		s[i].ss=r;
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
+	//cout<<"HELLO";
+	int length=0;
+	string temp;
+	int counto=0;
+	temp="polycarp";
+	//cout<<temp;
+	set <string> children;
+	overall.insert(temp);
+	while(counto<=210)
+	{
+		//cout<<temp;
+		children.clear();
+		int present=overall.size();
+		for(int i=1;i<=n;i++)
 		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
+			set<string>::iterator it;
+			  for (it = overall.begin(); it != overall.end(); it++)
+			   {
+			  
+				if(s[i].ss==(*it))
+				children.insert(s[i].ff);
 			}
 		}
-	if(q.size()<=1)
-	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		set<string>::iterator it;
+			  for (it = children.begin(); it != children.end(); it++)
+			  	overall.insert(*it);
+		int after=overall.size();
+		if(present!=after)
+			length++;
+		counto++;
 	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
-	}
+	cout<<length+1;
 	return 0;
 }

@@ -38,48 +38,32 @@ charan
 {
 	fast;
 	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
-	for(int i=1;i<=n;i++)
+	if(n<=2)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		cout<<"1"<<endl<<"1";
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
+	else if(n==3)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		cout<<"2"<<endl<<"1 3";
+	}
+	else if(n==4)
+	{
+		cout<<"4"<<endl<<"3 1 4 2";
 	}
 	else
 	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
+		int arr[n+1];
+		int j=1;
+		for(int i=1;i<=n;i+=2)
+			{arr[i]=j;j++;}
+		for(int i=2;i<=n;i+=2)
 		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
+			arr[i]=j;
+			j++;
 		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		cout<<n<<endl;
+		for(int i=1;i<=n;i++)
+			cout<<arr[i]<<" ";
 	}
 	return 0;
 }

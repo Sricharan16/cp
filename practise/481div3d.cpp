@@ -38,48 +38,68 @@ charan
 {
 	fast;
 	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	ll arr[n+1];
 	for(int i=1;i<=n;i++)
+		cin>>arr[i];
+	ll diff[10],ans[10];
+	if(n<=2)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		cout<<"0"<<endl;
+		return 0;
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
+	else{
+		ms0(diff,10,0);
+		ms0(ans,10,0);
+		ll curr[10];
+		diff[1]=arr[2]-arr[1];
+		curr[1]=arr[2];
+		ans[1]=0;
+		diff[2]=arr[2]+1-arr[1];
+		curr[2]=arr[2]+1;
+		ans[2]=1;
+		diff[3]=arr[2]-1-arr[1];
+		curr[3]=arr[2]-1;
+		ans[3]=1;
+		diff[4]=arr[2]-arr[1]-1;
+		curr[4]=arr[2];
+		ans[4]=1;
+		diff[5]=arr[2]+1-arr[1]-1;
+		curr[8]=arr[2]+1;
+		ans[5]=2;
+		diff[6]=arr[2]-1-arr[1]-1;
+		curr[6]=arr[2]-1;
+		ans[6]=2;
+		diff[7]=arr[2]-arr[1]+1;
+		curr[7]=arr[2];
+		ans[7]=1;
+		diff[8]=arr[2]+1-arr[1]+1;
+		curr[8]=arr[2]+1;
+		ans[8]=2;
+		diff[9]=arr[2]-1-arr[1]+1;
+		curr[9]=arr[2]-1;
+		ans[9]=2;
+		int flags=0;
+		ll ansi=0;
+		for(int i=3;i<=n;i++)
 		{
-			if(arr[i].ff!=brr[i].ff)
+			flags=0;
+			if(arr[i]+1-arr[i-1]-1 ==diff[3]||arr[i]+1-arr[i-1]-1 ==diff[6]||arr[i]+1-arr[i-1]-1 ==diff[9])
 			{
-				q.pb(arr[i]);
+				flags=1;
+				ansi=min(ansi,)
+			}
+			if(flags==0)
+			{
+				cout<<"-1";
+				exit(0);
 			}
 		}
-	if(q.size()<=1)
-	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		
+
 	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
-	}
+	int mini=1000000;
+	for(int i=1;i<=9;i++)
+		mini=min(mini,ans[i]);
+	cout<<mini;
 	return 0;
 }

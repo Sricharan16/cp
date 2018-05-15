@@ -27,7 +27,7 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(X,a) memset((X), a, sizeof((X)))
+#define ms0(x,n,a) fill_n(x, n, a)
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
@@ -38,58 +38,51 @@ charan
 {
 	fast;
 	ll n,s;cin>>n>>s;
-	int arr[n+1][2];
-	ll brr[n+1];
+	ll arr[n+1];
+	ll x,y;
 	for(int i=1;i<=n;i++)
 	{
-		cin>>arr[i][0]>>arr[i][1];
-		brr[i]=(arr[i][0]*60)+arr[i][1];
+		cin>>x>>y;
+		arr[i]=x*60+y;
+		//cout<<"#"<<arr[i]<<endl;
 	}
-	// for(int i=1;i<=n;i++)
-	// 	cout<<brr[i]<<" ";
-	if(n==1)
+	int k=1;
+	//cout<<s<<endl;
+	if(arr[1]>s)
 	{
-		for(int i=0;i<=brr[1]+60;i++)
-		{
-			if(abs(i-brr[1])>s)
-				{cout<<(i)/60<<" "<<i%60;return 0;}
-		}
+		cout<<"0 0";
 		return 0;
 	}
-		for(int i=0;i<=25;i++)
+	for(int i=0;i<=25;i++)
+	{
+		for(int j=0;j<=59;j++)
 		{
-			for(int j=0;j<=59;j++)
+			// if(i==2 && j==0)
+			// {
+			// 	cout<<k<<endl;
+			// }
+			if((arr[k]-i*60-j)>s && i*60+j-arr[k-1]>s)
 			{
-				int k=1;
-				while(brr[k]<=i*60+j && k<n)
-					k++;
-				//cout<<k<<endl;
-				if(k!=1 && k!=n)
-				{
-					//cout<<"here";
-					if((brr[k]-((i*60)+j))>s && (((i*60)+j)-brr[k-1])>s)
-					{
-						cout<<i<<" "<<j;	
-						return 0;
-					}
-				}
-				else if(k==1)
-				{
-					//cout<<"here1";
-					if(brr[k]-(i*60+j)>s)
-					{
-						cout<<i<<" "<<j;
-						return 0;
-					}
-				}
-				else if(k==n){
-					if((i*60+j)-brr[k]>s)
-					{
-						cout<<i<<" "<<j;
-						return 0;
-					}
-				}
+				//cout<<arr[k]<<" "<<k<<endl;
+				cout<<i<<" "<<j;
+				return 0;
 			}
+			 else if(i*60+j>arr[k])
+			 {
+
+				k++;
+			// 	k++;
+			// 	if(k==n+1)
+			// 		k--;
+			 }
+			
 		}
+	}
+	if(k>=n)
+			{
+				//cout<<"here";
+				cout<<(arr[n]+s+1)/60<<" "<<(arr[n]+s+1)%60;
+				return 0;
+			}
 	return 0;
 }

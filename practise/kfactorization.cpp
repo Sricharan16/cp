@@ -27,59 +27,58 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+bool primes[100000];
+void seive()
+{
+	for(int p=2;p<=sqrt(100000);p++)
+	{
+		if(primes[p]==true)
+			for(int j=2*p;j<=100000;j+=p)
+				primes[j]=false;
+	}
+}
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
-	for(int i=1;i<=n;i++)
+	ll n,k;cin>>n>>k;
+	
+	ms0(primes,true);
+	primes[1]=false;
+	seive();
+	// z
+	vector <int>factors;
+	for(int i=2;i<=100000;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
-	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
+		if(primes[i])
 		{
-			if(arr[i].ff!=brr[i].ff)
+			while(n%i==0)
 			{
-				q.pb(arr[i]);
+				factors.pb(i);
+				n=n/i;
 			}
 		}
-	if(q.size()<=1)
-	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
 	}
+	if(k>factors.size())
+		cout<<"-1";
 	else
 	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
+		for(int i=1;i<=k-1;i++)
 		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
+			cout<<factors[i-1]<<" ";
 		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		ll num=1;
+		for(int i=k;i<=factors.size();i++)
+		{
+			num=num*factors[i-1];
+		}
+		cout<<num;
 	}
 	return 0;
 }

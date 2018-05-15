@@ -37,49 +37,37 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
-	for(int i=1;i<=n;i++)
+	ll n,m;cin>>n>>m;
+	// if(m-1!=0 && min(m-1,n-m)==m-1)
+	// cout<<m-1;
+	// else
+	// cout<<m+1; 
+	if(n-m>m-1)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
-	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
+		if(m+1>n)
 		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
+			cout<<m-1;
+
 		}
-	if(q.size()<=1)
+		else
+			cout<<m+1;
+	}
+	else if(n-m==m-1)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		if(m-1<1)
+			cout<<m+1;
+		else
+			cout<<m-1;
 	}
 	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
 		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
+			if(m-1<1)
+		{
+			cout<<m+1;
+
 		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
-	}
+		else
+			cout<<m-1;
+		}
 	return 0;
 }

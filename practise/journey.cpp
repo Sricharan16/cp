@@ -34,41 +34,70 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+bool visited[100001];
+long double p[100001];
+ll dist[100001];
+vi adj[100001];
+void bfs(int i)
+{
+	queue <int> q;
+	q.push(i);
+	visited[i]=true;
+	while(!q.empty())
+	{
+		int temp=q.front();
+		q.pop();
+		int count=0;
+		for(int j=0;j<adj[temp].size();j++)
+		if(visited[adj[temp][j]]==false)
+				count++;
+		for(int i=0;i<adj[temp].size();i++)
+		{
+			if(visited[adj[temp][i]]==false)
+			{
+				dist[adj[temp][i]]=dist[temp]+1;
+				
+			// 	if(adj[temp].size()!=1)
+			// 	p[adj[temp][i]]=p[temp]/(adj[temp].size()-1);
+			// else
+				p[adj[temp][i]]=p[temp]/count;
+				visited[adj[temp][i]]=true;
+				q.push(adj[temp][i]);
+			}
+		}
+	}
+}
 charan
 {
 	fast;
-	ll n,d;cin>>n>>d;
-	int arr[101];
-	int maxi=0;
-	ll x;
-	ms0(arr,0);
-	for(int i=1;i<=n;i++)
+	ll n;cin>>n;
+	ll x,y;
+	for(int i=1;i<=n-1;i++)
 	{
-		cin>>x;
-		arr[x]++;
+		cin>>x>>y;
+		adj[x].pb(y);
+		adj[y].pb(x);
 	}
-	ll sum=0;
-	for(int i=1;i<=100;i++)
+	ms0(visited,false);
+	ms0(dist,0);
+	dist[1]=0;
+	p[1]=1;
+	bfs(1);
+	ll count=0;
+	long double sum=0;//for(int i=1;i<=n;i++)cout<<"p["<<i<<"]"<<p[i]<<" "<<dist[i]<<endl;
+	for(int i=2;i<=n;i++)
 	{
-		sum=0;
-		for(int j=1;j<=d+1;j++)
+		if(adj[i].size()==1)
 		{
-			if(i+j-1<=100)
-			sum+=arr[i+j-1];
+			//count++;
+			//cout<<i<<endl;
+			sum+=((1.0*dist[i])*p[i]);
+			//cout<<"sum "<<sum;
 		}
-		maxi=max(sum,maxi);
 	}
-if(d!=0)
-	cout<<n-maxi;
-else
-{
-	//cout<<"here";
-	maxi=0;
-	for(int i=1;i<=100;i++)
-	{
-		maxi=max(maxi,arr[i]);
-	}
-	cout<<n-maxi;
-}
+	// for(int i=1;i<=n;i++)
+	// 	cout<<"dist["<<i<<"]"<<" "<<dist[i]<<endl;
+	// cout<<sum<<" count"<<count;
+	cout<<fixed<<setprecision(9)<<sum;
 	return 0;
 }

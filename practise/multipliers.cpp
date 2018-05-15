@@ -34,52 +34,47 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+ll f[200001];
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
+	ll m;
+	cin>>m;
 	ll x;
-	for(int i=1;i<=n;i++)
+	ms0(f,200001,0);
+	ll num=1;
+	ll sol=1;
+	for(int i=1;i<=m;i++)
 	{
 		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		//num*=x;
+		f[x]++;
+		sol=(sol*x)%mod;
 	}
-	sort(brr+1,brr+n+1);
-	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
+	//cout<<sol<<endl;
+	ll final=1;
+	ll ans=1;
+	for(int i=1;i<=200000;i++)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
-	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
+		if((f[i]+1)%2==0)
 		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
+			f[i]=(f[i]+1)/2;
+			for(int j=1;j<=f[i];j++)
 			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
+				ans=(sol*ans)%mod;
 			}
-			}
+			f[i]=0;
+			break;
 		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
 	}
+	for(int i=1;i<=200000;i++)
+	{
+		if(f[i]!=0)
+		for(int j=1;j<=f[i]+1;j++)
+		{
+			ans=(sol*ans)%mod;
+		}
+	}
+	cout<<ans%mod;
 	return 0;
 }

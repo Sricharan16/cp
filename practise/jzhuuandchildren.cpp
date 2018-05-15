@@ -36,20 +36,29 @@ charan
 {
 	fast;
 	ll n,m;cin>>n>>m;
-	vii arr;ll x; int maxi=0;int pos=0;
+	queue <pii> q;
+	int index,x;
 	for(int i=1;i<=n;i++)
+	{
+		cin>>x;
+		q.push(mp(x,i));
+	}
+	//index=q.front().ss;
+	while(!q.empty())
+	{
+		x=q.front().ff;
+		index=q.front().ss;
+		q.pop();
+		if(x<=m)
 		{
-			cin>>x;
-			if((x%m)>=0 && (x>m))
-			{
-				//maxi=max(maxi,x);
-				pos=i;
-			}
+
 		}
-		if(pos!=0)
-		cout<<pos;
-	else
-		cout<<n;
+		else
+		{
+			q.push(mp(x-m,index));
+		}
+	}
+	cout<<index;
 
 	return 0;
 }

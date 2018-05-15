@@ -15,13 +15,13 @@ int main(int argc, char const *argv[])
 		cout<<"-1";
 		return 0;
 	}
-	if((count5/3)*3==0)
+	if((count5/9)<1)
 	{
 		cout<<"0";
 		return 0;
 	}
 	
-	for(int i=1;i<=(count5/3)*3;i++){
+	for(int i=1;i<=(count5/9)*9;i++){
 		cout<<"5";
 	}
 	//cout<<count0<<endl;

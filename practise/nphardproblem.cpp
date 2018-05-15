@@ -27,59 +27,80 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+vi adj[100001];
+bool visited[100001];
+int flags =0 ;
+char colour[100001];
+void DFS(int i,char a)
+{
+	visited[i]=true;
+	colour[i]=a;
+	for(int j=0;j<adj[i].size();j++)
+	{
+		if(visited[adj[i][j]]==false)
+		{
+			if(colour[i]=='r')
+				DFS(adj[i][j],'b');
+			else
+				DFS(adj[i][j],'r');
+		}
+		else
+		{
+			//cout<<colour[adj[i][j]]<<endl;
+			if(colour[adj[i][j]]==colour[i])
+			{
+				cout<<"-1";
+				exit(0);
+			}
+		}
+	}
+}
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	ll n,m;ll u,v;
+	cin>>n>>m;
+	ms0(colour,'r');
+	ms0(visited,false);
+	for(int i=1;i<=m;i++)
+	{
+		cin>>u>>v;
+		adj[u].pb(v);
+		adj[v].pb(u);
+	}
 	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		if(visited[i]==false)
+			DFS(i,'r');
 	}
-	sort(brr+1,brr+n+1);
+	int count0=0,count1=0;
+	 for(int i=1;i<=n;i++)
+	{
+		if(colour[i]=='r')
+			count0++;
+		else 
+			count1++;
+	}
+	cout<<count0<<endl;
+	 for(int i=1;i<=n;i++)
+	{
+		if(colour[i]=='r')
+			cout<<i<<" ";
+	} 
+	cout<<endl;
+	cout<<count1<<endl;
+
 	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
-	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
+		if(colour[i]=='b')
+			cout<<i<<" ";
 	}
 	return 0;
 }

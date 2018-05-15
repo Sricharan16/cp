@@ -37,7 +37,7 @@ charan
 	int arr[10]={9,8,7,6,5,4,3,2,1,0};
 	while(t--){
 		ll n,w;cin>>n>>w;
-		if(abs(w)>9){
+		if(w>=9 || w<-9){
 			cout<<"0"<<endl;
 		}
 		else{

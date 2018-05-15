@@ -23,34 +23,56 @@ using namespace std;
 #define pdqueue priority_queue< int,vector <int>,greater< int > >
 #define ff first
 #define ss second
-#define min(a,b) (a<b)?a:b
-#define max(a,b) (a>b)?a:b
+#define min(a,b) ((a<b)?(a):(b))
+#define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(X,a) memset((X), a, sizeof((X)))
+#define ms0(x,n,a) fill_n(x, n, a)
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
+const ll inf=1e18;
+const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;ll x;cin>>n;
+	ll n;cin>>n;
 	ll arr[n+1];
-	f(i,1,n+1)cin>>arr[i];
-	x=arr[1];
-	f(i,2,n+1){
-		x=gcd(x,arr[i]);
-	}
-	f(i,1,n+1)
+	ll lcm;
+	for(int i=1;i<=n;i++)cin>>arr[i];
+		lcm=arr[1];
+	for(int i=2;i<=n;i++)
 	{
-		arr[i]/=x;
-		if(arr[i]%2!=0 && arr[i]%3!=0 && arr[i]!=1)
+		lcm=gcd(lcm,arr[i]);
+	}
+	//cout<<lcm<<endl;
+	for(int i=1;i<=n;i++)
+	{
+		arr[i]/=lcm;
+		//cout<<arr[i]<<" ";
+		while((arr[i])%2==0 || (arr[i])%3==0)
 		{
-			cout<<"NO";
+			if((arr[i])%2==0)
+			{
+				arr[i]=arr[i]/2;
+			}
+			if((arr[i])%3==0)
+			{
+				arr[i]=arr[i]/3;
+			}
+		}
+	}
+	ll comp=arr[1];
+	for(int i=2;i<=n;i++)
+	{
+		if(arr[i]!=comp)
+		{
+			cout<<"No";
 			return 0;
 		}
 	}
-	cout<<"YES";
+cout<<"Yes";
+//cout<<257407169*18<<endl;
 	return 0;
 }

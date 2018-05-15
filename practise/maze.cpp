@@ -27,59 +27,99 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(x,n,a) fill_n(x, n, a)
+#define ms0(X,a) memset((X), a, sizeof((X)))
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+int counti=0;
+int n,m,k,s=0;
+char arr[501][501];
+bool visited[501][501];
+void DFS(int i,int j)
+{
+	//cout<<"######"<<i<<" "<<j<<"######"<<endl;
+	 if(arr[i][j]=='.' && counti<s-k && visited[i][j]==false)
+	 {
+	 	counti++;
+	 	visited[i][j]=true;
+	 	//cout<<counti<<"#i"<<i<<"#J"<<j<<endl;
+	 	if(i+1<=n)
+	 	{
+	 		//cout<<"###"<<counti<<endl;
+	 		DFS(i+1,j);
+	 	}
+	 	if(j+1<=m)
+	 	{
+	 		DFS(i,j+1);
+	 	}
+	 	if(i-1>=1)
+	 	{
+	 		DFS(i-1,j);	
+	 	}
+	 	if(j-1>=1)
+	 	{
+	 		DFS(i,j-1);
+	 	}
+
+	 }
+	 else if(arr[i][j]=='.' && counti>=s-k && visited[i][j]==false)
+	 {
+	 	//cout<<"entered herre";
+	 	arr[i][j]='X';
+	 	if(i+1<=n)
+	 	{
+	 		//cout<<"###"<<counti<<endl;
+	 		DFS(i+1,j);
+	 	}
+	 	if(j+1<=m)
+	 	{
+	 		DFS(i,j+1);
+	 	}
+	 	if(i-1>=1)
+	 	{
+	 		DFS(i-1,j);	
+	 	}
+	 	if(j-1>=1)
+	 	{
+	 		DFS(i,j-1);
+	 	}
+	 }
+	 else 
+	 	return;
+}
 charan
 {
 	fast;
-	ll n;cin>>n;
-	pii arr[n+1];
-	pii brr[n+1];
-	vector<pii>q;
-	ll x;
+	
+	cin>>n>>m>>k;
+	int flags =0;
+	int posx,posy;
+	ms0(visited,false);
 	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		arr[i]=mp(x,i);
-		brr[i]=arr[i];
+		for(int j=1;j<=m;j++)
+		{
+			cin>>arr[i][j];
+			if(arr[i][j]=='.')
+				s++;
+			if(arr[i][j]=='.' && flags==0)
+			{
+				posx=i;
+				posy=j;
+				flags=1;
+			}
+		}
 	}
-	sort(brr+1,brr+n+1);
+	DFS(posx,posy);
 	for(int i=1;i<=n;i++)
-		{
-			if(arr[i].ff!=brr[i].ff)
-			{
-				q.pb(arr[i]);
-			}
-		}
-	if(q.size()<=1)
 	{
-		cout<<"yes"<<endl;
-		cout<<"1 1";
+		for(int j=1;j<=m;j++)
+			cout<<arr[i][j];
+		cout<<endl;
 	}
-	else
-	{
-		//for(int i=0;i<)
-		// for(int i=0;i<q.size();i++)
-		// 	cout<<q[i].ff<<" ";
-		// cout<<endl;
-		for(int i=0;i<q.size()-1;i++)
-		{
-			for(int j=q[i].ss;j<q[i+1].ss;j++)
-			{
-			if( arr[j].ff<arr[j+1].ff)
-			{
-				cout<<"no";
-				return 0;
-			}
-			}
-		}
-		cout<<"yes"<<endl;
-		cout<<q[0].ss<<" "<<q[q.size()-1].ss<<endl;
-	}
+
 	return 0;
 }
