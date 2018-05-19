@@ -34,38 +34,39 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+ll calc(ll k)
+{
+	if(k>1)
+		return k*(k-1)/2;
+	else
+		return 0;
+}
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll n,d;
+	cin>>n>>d;
+	vector <long long> arr(n+1);
+	arr[0]=-10000000000;
+	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		if(x==1)
+		cin>>arr[i];
+	}
+	ll ans=0;
+	for(int i=1;i<=n;i++)
+	{
+		//int search=arr[i]+d;
+		vector <long long>:: iterator it;
+		it=lower_bound(arr.begin(),arr.end(),arr[i]+d);
+		if(arr[it-arr.begin()]==arr[i]+d)
 		{
-			cout<<"YES";
+			ans+=calc(it-arr.begin()-i);
 		}
 		else
 		{
-			cout<<"NO";
+			ans+=calc(it-arr.begin()-i-1);
 		}
 	}
-	else
-	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
-	}
+	cout<<ans;
 	return 0;
 }

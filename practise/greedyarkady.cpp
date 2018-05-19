@@ -37,35 +37,36 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll n,k,m,d;
+	cin>>n>>k>>m>>d;
+	ll maxi=0;
+	if(d==1 || n==k)
 	{
-		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
-		}
+		ll groups=n/m;
+		maxi=ceil((float)groups/k)*m;
+		cout<<maxi;
+		return 0;
 	}
 	else
 	{
-		for(int i=1;i<=n;i++)
+		ll groups=n/m;
+		maxi=ceil((float)groups/k)*m;
+		//cout<<maxi<<endl;
+		for(int i=1;i<=d;i++)
 		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
+		if(((n)/((i-1)*k+1))<=m)
+		{
+			
+			ll l=n/((i-1)*k+1);
+			if(l==0)
+				break;
+			//cout<<l<<endl;
+			if(l>0)
+			maxi=max(maxi,(l)*i);
+			
 		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
+		}
 	}
+	cout<<maxi<<endl;
 	return 0;
 }

@@ -34,38 +34,38 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+int arr[100001];
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	pdqueue pq;
+	ll n;cin>>n;ll x;
+	int temp=n;
+	for(int i=1;i<=n;i++)
 	{
 		cin>>x;
-		if(x==1)
+		arr[x]++;
+		if(x==temp)
 		{
-			cout<<"YES";
+			for(int i=x;i>=1;i--)
+			{
+				if(arr[i]==1)
+					{
+						arr[i]--;
+						cout<<i<<" ";
+						temp=i;
+					}
+				else
+					break;
+			}
+			temp--;
+			cout<<"\n";
 		}
 		else
 		{
-			cout<<"NO";
+			cout<<"\n";
 		}
 	}
-	else
-	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
-	}
+	
 	return 0;
 }

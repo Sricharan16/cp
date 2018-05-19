@@ -37,35 +37,26 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll n;cin>>n;
+	ll p,q,b;
+	ll alpha;
+	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
+	cin>>p>>q>>b;
+	alpha=gcd(p,q);
+	//p=p/alpha;
+	q=q/alpha;
+	b = gcd(q, b);
+		while (b != 1) {
+			while (q % b == 0) q /= b;
+			b = gcd(q, b);
 		}
-		else
-		{
-			cout<<"NO";
-		}
-	}
+	//cout<<q<<endl;
+	if(q!=1)
+		cout<<"Infinite"<<endl;
 	else
-	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
-	}
+		cout<<"Finite"<<endl;
+}
 	return 0;
+
 }

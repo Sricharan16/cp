@@ -37,35 +37,35 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	priority_queue< pii > type2;//greater to smaller
+	priority_queue< pii,vector <pii>,greater< pii > > type1;
+	ll n;cin>>n;
+	ll arr[n+1];
+	ll x;
+	for(int i=1;i<=n;i++)
 	{
 		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
-		}
+		type1.push(mp(x,i));
+		//type2.push(mp(x,i));
 	}
-	else
+	pii temp;
+	string str;cin>>str;
+	for(int i=0;i<2*n;i++)
 	{
-		for(int i=1;i<=n;i++)
+		if(str[i]=='0')//introvert type1
 		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
+			temp=type1.top();
+			type1.pop();
+			cout<<temp.ss<<" ";
+			type2.push(temp);
+
 		}
-		if(count0==1)
-			cout<<"YES";
 		else
-			cout<<"NO";
+		{
+			temp=type2.top();
+			type2.pop();
+			cout<<temp.ss<<" ";
+		}
 	}
 	return 0;
 }

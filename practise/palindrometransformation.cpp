@@ -37,35 +37,41 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll n,p;
+	cin>>n>>p;
+	string str;cin>>str;
+	vi pos;
+	ll sum=0;
+	for(int i=1;i<=(n+1)/2;i++)
 	{
-		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
-		}
+		if(str[i-1]!=str[n-i])
+			pos.pb(i);
 	}
+	if(pos.size()==0)
+	{
+		cout<<"0";
+		return 0;
+	}
+	int first=pos[0];
+	int last=pos[pos.size()-1];
+	if(p>(n+1)/2)
+		p=n-p+1;
+	if(p>=last)
+	{
+		sum+=(p-first);
+	}
+	else if(p<=first)
+		sum+=(last-p);
 	else
 	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
+		int temp1=2*(p-first)+(last-p);
+		int temp2=(p-first)+2*(last-p);
+		sum+=min(temp1,temp2);
 	}
+	for(int i=1;i<=(n+1)/2;i++)
+	{
+		sum+=min(abs(str[i-1]-str[n-i]),26-abs(str[i-1]-str[n-i]));
+	}
+	cout<<sum;
 	return 0;
 }

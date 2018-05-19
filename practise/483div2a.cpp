@@ -38,34 +38,11 @@ charan
 {
 	fast;
 	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
-	{
-		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
-		}
-	}
-	else
-	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
-	}
+	cin>>n;
+	ll arr[n+1];
+	f(i,1,n+1)cin>>arr[i];
+	sort(arr+1,arr+n+1);
+	int k=(n+1)/2;
+	cout<<arr[k];
 	return 0;
 }

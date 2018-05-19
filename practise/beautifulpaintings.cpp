@@ -38,34 +38,47 @@ charan
 {
 	fast;
 	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	cin>>n;
+	ll arr[n+1];
+	ll f[1001];
+	ms0(f,1001,0);
+	vi pos;
+	for(int i=1;i<=n;i++)
+		{cin>>arr[i];
+			f[arr[i]]++;
+		}
+		//sort(arr+1,arr+n+1);
+	int index=0;
+	for(int i=1;i<=1000;i++)
 	{
-		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
-		}
+		if(f[i]==0)
+			index++;
+
 	}
-	else
+	int count=0;
+	while(index!=1000)
 	{
-		for(int i=1;i<=n;i++)
+		//cout<<index<<endl;
+		 index=0;
+		int ans=0;
+		for(int i=1;i<=1000;i++)
 		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
+			if(f[i]!=0)
+				{
+				f[i]-=1;
+				ans++;
+			}
+
 		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
+	for(int i=1;i<=1000;i++)
+	{
+		if(f[i]==0)
+			index++;
+
 	}
+	if(ans>=2)
+	count+=(ans-1);
+	}
+	cout<<count;
 	return 0;
 }

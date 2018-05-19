@@ -34,38 +34,58 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+bool visi[1000001];
+vi adj[1000001];
+ll arr[1000001];
+vi pos;
+vi elements;
+void dfs(int i)
+{
+	if(visi[i])
+		return ;
+	else
+	{
+		pos.pb(i);
+		elements.pb(arr[i]);
+		visi[i]=true;
+		for(auto j:adj[i])
+			if(!visi[j])
+			{
+				dfs(j);
+			}
+	}
+}
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll n,m;cin>>n>>m;
+	ms0(visi,1000001,false);
+	ll x,y;
+	for(int i=1;i<=n;i++)cin>>arr[i];
+	for(int i=1;i<=m;i++)
 	{
-		cin>>x;
-		if(x==1)
+		cin>>x>>y;
+		adj[x].pb(y);
+		adj[y].pb(x);
+	}
+	for(int i=1;i<=n;i++)
+	{
+		if(!visi[i])
 		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
+			dfs(i);
+			sort(pos.begin(),pos.end());
+			sort(elements.begin(),elements.end(),std::greater<int>());
+			for(int j=0;j<pos.size();j++)
+			{
+				arr[pos[j]]=elements[j];
+			}
+			pos.clear();
+			elements.clear();
 		}
 	}
-	else
+	for(int i=1;i<=n;i++)
 	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
+		cout<<arr[i]<<" ";
 	}
 	return 0;
 }

@@ -34,38 +34,43 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+vi adj[200001];
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll n,k;cin>>n>>k;
+	vector<long long> arr(n+1);
+	vector <long long > brr(n+1);
+	arr[0] = 0;
+	brr[0] = 0;
+	for( int i=1 ; i<=n ; i++ )
 	{
-		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
-		}
+		cin>>arr[i];
+		brr[i]=arr[i];
 	}
-	else
+	sort(brr.begin(),brr.end());
+	ll x,y;
+	for(int i=1;i<=k;i++)
 	{
-		for(int i=1;i<=n;i++)
+		cin>>x>>y;
+		adj[x].pb(y);
+		adj[y].pb(x);
+	}
+	for(int i=1;i<=n;i++)
+	{
+		ll ans=0;
+		vector<long long>:: iterator low;
+		low=lower_bound(brr.begin(),brr.end(),arr[i]);
+		ans=low-brr.begin();
+		//cout<<ans<<" ";
+		for(int j=0;j<adj[i].size();j++)
 		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
+			//cout<<"<"<<arr[adj[i][j]]<<">"<<endl;
+			if(arr[adj[i][j]]<arr[i])
+				ans--;
 		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
+		cout<<ans-1<<" ";
+		//cout<<endl;
 	}
 	return 0;
-}
+}	

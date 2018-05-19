@@ -34,38 +34,42 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+vector<long long> arr(200001);
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	arr[0]=0;
+	ll n,q;
+	cin>>n;
+	cin>>q;
+	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
-		}
+		cin>>arr[i];
+		arr[i] = arr[i] + arr[i-1];
 	}
-	else
+	ll maxi = arr[n];
+	ll qrr[q+1];
+	qrr[0]=0;
+	for(int i=1;i<=q;i++)
 	{
-		for(int i=1;i<=n;i++)
+		cin>>qrr[i];
+		qrr[i]=qrr[i]+qrr[i-1];
+		if(qrr[i]>=maxi)
+			qrr[i]=0;
+	}
+	for(int i=1;i<=q;i++)
+	{
+		vector<long long>::iterator pos;
+		pos=lower_bound(arr.begin(),arr.begin()+n,qrr[i]);
+		ll ans=pos-arr.begin();
+		if(qrr[i]==arr[pos-arr.begin()])
 		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
+			cout<<n-ans<<endl;
 		}
-		if(count0==1)
-			cout<<"YES";
 		else
-			cout<<"NO";
+		{
+			cout<<n-ans+1<<endl;
+		}
 	}
 	return 0;
 }

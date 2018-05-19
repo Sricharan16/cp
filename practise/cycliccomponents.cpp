@@ -34,38 +34,55 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+vi adj[200001];
+bool v[200001];
+int flags=0;
+void dfs(int i)
+{
+	if(v[i])
+		return;
+	if(!v[i])
+	{
+		v[i]=true;
+		//cout<<"#"<<i<<endl;
+		//cout<<adj[i].size()<<"####"<<endl;
+		if(adj[i].size()!=2)
+			flags=1;
+		for(auto j:adj[i])
+		{
+			//cout<<"children"<<j<<endl;
+			if(!v[j])
+			{
+				dfs(j);
+			}
+		}
+	}
+}
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ms0(v,200001,false);
+	ll n,m;cin>>n>>m;ll x,y;
+	for(int i=1;i<=m;i++)
 	{
-		cin>>x;
-		if(x==1)
+		cin>>x>>y;
+		adj[x].pb(y);
+		adj[y].pb(x);
+	}
+	int count=0;
+
+	for(int i=1;i<=n;i++)
+	{
+		if(!v[i])
 		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
+			//cout<<":::"<<i<<endl;
+			flags=0;
+			dfs(i);
+			//cout<<flags;
+			if(flags==0)
+				count++;
 		}
 	}
-	else
-	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
-	}
+	cout<<count;
 	return 0;
 }

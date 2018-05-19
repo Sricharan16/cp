@@ -37,35 +37,46 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll n,a;cin>>n>>a;
+	//int arr[n+1];
+	ll x;
+	int count=0;
+	ll c[1000001];
+	ms0(c,1000001,0);
+	//int pos=0;
+	ll ans=0;
+	for(int i=1;i<=n;i++)
 	{
 		cin>>x;
-		if(x==1)
+		if(x!=a)
 		{
-			cout<<"YES";
+				if(c[x]>=count)
+					c[x]++;
+				// if(c[arr[i]]>ans)
+				// {
+				// 	ans=max(ans,c[arr[i]]);
+				// 	pos=arr[i];
+				// }
 		}
 		else
 		{
-			cout<<"NO";
+			count++;
+			// if(count>ans)
+			// 	{
+			// 		//cout<<i<<endl<<arr[i]<<endl;
+			// 		cout<<"-1";return 0;
+			// 	}
+
 		}
-	}
-	else
+	}	
+	int pos=-1;
+	for(int i=1;i<=1000000;i++)
 	{
-		for(int i=1;i<=n;i++)
+		if(i!=a)
 		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
+			if(c[i]>=count)pos=i;
 		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
 	}
+	cout<<pos;
 	return 0;
 }

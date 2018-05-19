@@ -34,38 +34,70 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+vi adj[300001];
+bool v[300001];
+//bool past[300001];
+ll sum=0;
+void dfs(int i,int k)
+{
+ if(v[i]==true)
+ 	return;
+ else
+ {
+ 	v[i]=true;
+ 	sum++;
+ 	for(auto j:adj[i])
+ 		if(!v[j] && j!=k)
+ 			{
+ 				dfs(j,k);
+ 			}
+ }
+}
+void parent(int i,int p)
+{
+	if(v[i]==true)
+		return;
+	else
+	{
+		//cout<<i<<"###"<<endl;
+		v[i]=true;
+		for(auto j:adj[i])
+			if(!v[j])
+			{
+				if(j==p)
+					sum=i;
+				parent(j,p);
+			}
+	}
+}
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll n,x,y;cin>>n>>x>>y;
+	ll a,b;
+	ll belowxvalue=0;
+	ms0(v,300001,false);
+	for(int i=1;i<=n-1;i++)
 	{
-		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
-		}
-		else
-		{
-			cout<<"NO";
-		}
+		cin>>a>>b;
+		adj[a].pb(b);
+		adj[b].pb(a);
 	}
-	else
-	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
-	}
+	sum=0;
+	parent(x,y);
+	ll z=sum;
+	ms0(v,300001,false);
+	sum=0;
+	parent(y,x);
+	ll above=sum;
+	sum=0;
+	ms0(v,300001,false);
+	dfs(x,above);
+	belowxvalue=sum;
+	sum=0;
+	dfs(y,z);
+	ll abovexvalue=sum;
+	 cout<<n*(n-1)-(belowxvalue*abovexvalue);
+
 	return 0;
 }

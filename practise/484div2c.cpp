@@ -34,38 +34,52 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
+vi adj[100001];
+ll deg[100001];
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll  n;
+	cin>>n;
+	ll x,y;//cin>>x>>y;
+	vector<tri> edj;
+	for(int i=1;i<=n-1;i++)
 	{
-		cin>>x;
-		if(x==1)
+		cin>>x>>y;
+		adj[x].pb(y);
+		adj[y].pb(x);
+		edj.pb(mp(0,mp(x,y)));
+	}
+	ll count=0;
+	for(int i=1;i<=n;i++)
+	{
+		deg[i]=adj[i].size();
+	}
+	//sort(deg+1,deg+n+1,greater< pii >());
+	for(int i=0;i<edj.size();i++)
+	{
+		edj[i].ff=deg[edj[i].ss.ff]+deg[edj[i].ss.ss];
+	}
+	sort(edj.begin(),edj.end(),greater<tri>());
+	for(int i=0;i<edj.size();i++)
+	{
+		if(deg[edj[i].ss.ff]>=2 && deg[edj[i].ss.ss]>=2)
 		{
-			cout<<"YES";
+			cout<<edj[i].ss.ff<<" "<<edj[i].ss.ss<<endl;
+			deg[edj[i].ss.ff]--;
+			deg[edj[i].ss.ss]--;
+			count++;
 		}
+	}
+	if(count==0)
+	{
+		//cout<<"-1";
+		if(n%2==0)
+		cout<<"0";
 		else
-		{
-			cout<<"NO";
-		}
+			cout<<"-1";
 	}
 	else
-	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
-	}
+		cout<<count;
 	return 0;
 }

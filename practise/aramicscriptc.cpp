@@ -37,35 +37,32 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
-	if(n==1)
+	ll n;cin>>n;
+	set<string>p;
+	int arr[26];
+	ms0(arr,26,0);
+	string str;
+	for(int i=1;i<=n;i++)
 	{
-		cin>>x;
-		if(x==1)
+		cin>>str;
+		for(int j=0;j<str.length();j++)
 		{
-			cout<<"YES";
+			if(arr[str[j]-'a']==0)
+			arr[str[j]-'a']++;
+		//cout<<arr[str[j]-'a']<<endl;
 		}
-		else
+		str="";
+		for(int j=0;j<26;j++)
 		{
-			cout<<"NO";
+			//cout<<arr[j]<<" ";
+			str=str+to_string(arr[j]);
+			arr[j]=0;
 		}
+		//cout<<endl;
+		p.insert(str);
+
+
 	}
-	else
-	{
-		for(int i=1;i<=n;i++)
-		{
-			cin>>x;
-			if(x==1)
-				count1++;
-			else
-				count0++;
-		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
-	}
+	cout<<p.size();
 	return 0;
 }

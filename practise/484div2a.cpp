@@ -37,35 +37,103 @@ const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;
-	cin>>n;ll x;
-	int count0=0,count1=0;
+	ll n;cin>>n;
+	string str;
+	cin>>str;
 	if(n==1)
 	{
-		cin>>x;
-		if(x==1)
-		{
-			cout<<"YES";
-		}
+		if(str=="1")
+			cout<<"Yes";
 		else
-		{
-			cout<<"NO";
-		}
+			cout<<"No";
+	return 0;
+	}
+	else if(n==2)
+	{
+		if(str=="10"||str=="01")
+			cout<<"Yes";
+		else
+			cout<<"No";
+		return 0;
 	}
 	else
 	{
-		for(int i=1;i<=n;i++)
+		if(str[1]=='1')
 		{
-			cin>>x;
-			if(x==1)
-				count1++;
+			if(str[0]=='0')
+			{
+
+			}
 			else
-				count0++;
+			{
+				cout<<"NO";
+				return 0;
+			}
 		}
-		if(count0==1)
-			cout<<"YES";
-		else
-			cout<<"NO";
-	}
+		if(str[1]=='0')
+		{
+			if(str[0]=='1')
+			{
+
+			}
+			else
+			{
+				cout<<"NO";
+				return 0;
+			}
+		}
+		if(str[n-2]=='1')
+		{
+			if(str[n-1]=='0')
+			{
+
+			}
+			else
+			{
+				cout<<"NO";
+				return 0;
+			}
+		}
+		if(str[n-2]=='0')
+		{
+			if(str[n-1]=='1')
+			{
+
+			}
+			else
+			{
+				cout<<"NO";
+				return 0;
+			}
+		}
+		for(int i=0;i<str.length();i++)
+		{
+			if(i>1 && i<n-1)
+			if(str[i]=='1')
+			{
+				if(str[i-1]=='0' && str[i+1]=='0')
+				{
+
+				}
+				else
+				{
+					cout<<"No";
+					return 0;
+				}
+
+			}
+		}
+		for(int i=0;i<str.length()-2;i++)
+		{
+			//if(i>1 && i<n-1)
+			if(str[i]=='0'&& str[i+1]=='0'&& str[i+2]=='0')
+			{
+				cout<<"No";
+				return 0;
+			}
+		}
+
+		}
+	cout<<"Yes";
 	return 0;
 }
