@@ -1,45 +1,96 @@
 #include<bits/stdc++.h>
 using namespace std;
-int main()
+#define ms0(x,n,a) fill_n(x, n, a)
+#define pdqueue priority_queue< int,vector <int>,greater< int > >
+queue<int> q;
+int n,k;
+bool arr[200001];
+void printq(queue <int> p)
 {
-	int n,k;cin>>n>>k;int b[n]={0};
-	// for(int i=n-1;i>=0;i--)
-	// {
-	// 	// if(b[i]!=1)
-	// 	// 	cout<<i+1<<" here";
-	// 	cout<<b[i]<<" ";
-	// }cout<<"done printing";
-	int A[k+2];for (int i = 1; i <=k; ++i)
+	while(!p.empty())
 	{
-		/* code */cin>>A[i];b[A[i]-1]=1;
+		cout<<p.front()<<" ";
+		p.pop();
 	}
-	A[0]=n;A[k+1]=1;
-	if(k!=1){for (int i = 1; i <= k-1; ++i)if(A[i]<A[i+1]){cout<<"-1";return 0;}}
-	for (int i = 1; i <= k; ++i)
-	{   //if(A[i]==n)continue;
-		//if(A[i]==1)continue;
-		cout<<A[i]<<" ";
-	}//cout<<endl;
-	int g=1;
-	for (int j = k; j >=0; j--)
-	{	//cout<<"fuck";
-		for (int i = A[j]-1; i >A[j+1]; --i)
-		{	if(i+1==n )
-			cout<<n<<" ";
-			cout<<i<<" ";
-			if(i-1==1)
-			cout<<"1"<<" ";
+	cout<<endl;
+}
+void solve(queue<int> qi)
+{
+	pdqueue pq;
+	while(!qi.empty())
+	{
+		pq.push(qi.front());
+		qi.pop();
+	}
+	while(!pq.empty())
+	{
+		int temp=pq.top();
+		pq.pop();
+		while(arr[temp-1]!=1 && temp-1>=1)
+		{
+			q.push(temp-1);
+			arr[temp-1]=1;
+			temp--;
 		}
 	}
-	// if(A[k+1]!=1)
-	// {
-	// 	for(int i=A[k+1]-1;i>=1;i--){cout<<i<<" ";b[i-1]=1;}
-	// }
-	// for(int i=n-1;i>=0;i--)
-	// {
-	// 	if(b[i]!=1)
-	// 		cout<<i+1<<" ";
-	// 	//cout<<b[i]<<" ";
-	// }
-	return 0;
+	for(int i=n;i>=1;i--)
+	{
+		if(arr[i]==0)
+			q.push(i);
+	}
+
+}
+int main()
+{
+	
+	cin>>n>>k;
+	ms0(arr,n+1,false);
+	stack<int> s;
+	int temp;
+	for(int i=1;i<=k;i++)
+	{
+		cin>>temp;
+		q.push(temp);
+		arr[temp]=1;
+	}
+	for(int i=1;i<=n;i++)
+	{
+		if(!q.empty())
+		{
+		int temp=q.front();
+		q.pop();
+	}
+		if(s.empty())
+		{
+			while(i!=temp && !q.empty())
+			{
+				s.push(temp);
+				temp=q.front();
+				q.pop();
+
+			}
+		}
+		else
+		{
+			while(i!=temp && s.top()!=i && !q.empty())
+			{
+				s.push(temp);
+				temp=q.front();
+				q.pop();
+			}
+		}
+		
+		if(!s.empty() && s.top()==i)
+		{
+			s.pop();
+			continue;
+		}
+		//else if()
+		if(q.empty() && s.top()!=i)
+		{
+			cout<<"-1";
+		}
+	}
+	printq(q);
+return 0;
 }

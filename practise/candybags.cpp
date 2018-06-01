@@ -23,20 +23,32 @@ using namespace std;
 #define pdqueue priority_queue< int,vector <int>,greater< int > >
 #define ff first
 #define ss second
-#define min(a,b) (a<b)?a:b
-#define max(a,b) (a>b)?a:b
+#define min(a,b) ((a<b)?(a):(b))
+#define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(X,a) memset((X), a, sizeof((X)))
+#define ms0(x,n,a) fill_n(x, n, a)
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
+const ll inf=1e18;
+const ll minf=-(1e18);
 charan
 {
 	fast;
-	ll n;cin>>n;
+	ll n;
+	cin>>n;
+	int j=1;
 	for(int i=1;i<=n;i++)
-		cout<<i<<" "<<n*n-i+1<<endl;
+	{
+		for(int k=1;k<=n/2;k++)
+		{
+			cout<<j<<" "<<n*n-j+1<<" ";
+			j++;
+		}
+
+		cout<<endl;
+	}
 	return 0;
 }

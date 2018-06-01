@@ -26,28 +26,6 @@ ll n,k,d;
 ll dp[101];
 ll sol[101];
 int sum=0;
-int solve(int i,int state)
-{
-	cout<<i<<" ";
-	if(state==1)
-		return dp[i];
-	else
-	{
-			if(i==0)
-			return 0;
-		
-			for(int q=1;q<=k;q++)
-			{
-				if(q>=d && i-q>=0)
-				{
-			 		sum+=solve(i-q,1);
-			 	}
-			 	else if(i-q>=0)
-			 		sum+=solve(i-q,0);
-			}
-		return sum;
-	}
-}
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 charan
 {
@@ -55,52 +33,34 @@ charan
 	cin>>n>>k>>d;
 	
 	ms0(dp,0);
-	ms0(sol,0);
+	//ms0(sol,0);
 	//dp[0][1]=1;//second 1 for showing that edge contains a d;
 	dp[0]=1;
+	sol[0]=1;
 	for(int i=1;i<=n;i++)
 	{
 		for(int j=1;j<=k;j++)
 		{
-			// if(i-j>=0 && j<d)
-			// {
-			// 	dp[i][0]+=dp[i-j][0];
-			// }
-			// if(j>=d && i-j>=0)
-			// 	{
-			// 		dp[i][1]+=dp[i-j][0];
-			// 	}
-			if(i-j>=0)
-				{dp[i]+=dp[i-j];
-							//cout<<i<<" "<<j<<"##"<<endl;
-						}
-			// if(j>=d && i-j>=0)
-			// 	{
 			
-			// 		dp[i][1]+=dp[i-j][0];
-			// 	}
+			if(i-j>=0)
+				{
+					dp[i]=(dp[i]+dp[i-j])%mod;
+				}
+	
 		}
 	}
 	for(int i=1;i<=n;i++)
 	{
-		sum=0;
-		for(int j=1;j<=k;j++)
+		for(int j=1;j<=d-1;j++)
 		{
-			if(j>=d && i-j>=0)
+			
+			if(i-j>=0)
 				{
-					sol[i]+=solve(i-j,1);
-					cout<<endl;
+					sol[i]=(sol[i]+sol[i-j])%mod;
 				}
-			else if(i-j>=0)
-			{
-				sol[i]+=solve(i-j,0);
-				cout<<endl;
-			}
-			// if(i==4)
-			// cout<<">"<<j<<" "<<sol[i]<<endl;	
+	
 		}
 	}
-	for(int i=1;i<=n;i++)
-	cout<<dp[i]<<" "<<sol[i]<<endl;//<<dp[i][1]<<endl;
+	cout<<(dp[n]-sol[n]+mod)%mod;
 	return 0;
 }

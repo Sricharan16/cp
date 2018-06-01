@@ -9,8 +9,6 @@ using namespace std;
 #define vll vector<pll>
 #define viii vector<tri>
 #define tri pair<int,pii>
-#define mod (1000*1000*1000+7)
-#define moddd (1000*1000*1000+9)
 #define ll long long
 #define pb push_back
 #define mp make_pair
@@ -27,89 +25,78 @@ using namespace std;
 #define max(a,b) ((a>b)?(a):(b))
 #define gcd(a,b)    __gcd((a),(b))
 #define lcm(a,b)    ((a)*(b)) / gcd((a),(b))
-#define ms0(X,a) memset((X), a, sizeof((X)))
+#define ms0(x,n,a) fill_n(x, n, a)
 #define gdb(n) cout<<">>"<<n<<"<<"<<endl
 //setbase - cout << setbase (16); cout << 100 << endl; Prints 64
 //setprecision - cout << setprecision (4) << f << endl; Prints x.xxxx
 #define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
 const ll inf=1e18;
 const ll minf=-(1e18);
-bool flags[300005];
-ll bit[300005];
-ll getsum(ll n){
-	//	n=n+1;
-	ll sum=0;
-	while(n>0)
-	{
-	sum+=bit[n];
-	n-= n&(-n);
-    }
-    return sum;
+const ll mod=1e9+7;
+const ll med=1e9+9;
+//change mod or med accordingly whenever necessary carefulwith mod!!!!!
+inline ll add(ll x,ll y){ x += y; if(x >= mod) x -= mod; return x;}
+inline ll sub(ll x,ll y){ x -= y; if(x < 0) x += mod; return x;}
+inline ll mul(ll x,ll y){ return (x * 1ll * y) % mod;}
+ll power(ll x,ll y){
+    if(y==0)return 1;
+    if(y==1)return x;
+    ll ans=power(x,y/2)%mod;
+    ans*=ans;
+    ans%=mod;
+    if(y%2)ans*=x;
+    return ans%mod;
 }
-void update(ll idx,ll value,ll n,ll p)
-{
-	//idx=idx+1;
-	if(value==1)
-	{
-		while(idx<=n)
-		{
-			bit[idx]++;
-			idx+= (idx)&(-idx);
-		}
-	}
-	else if(value==2)
-	{
-		ll temp=bit[idx];
-		while(idx<=n)
-		{
-			bit[idx]-=temp;
-			idx+= (idx)&(-idx);
-		}
-	}
-	else
-	{
-		
-			while(idx<=n)
-			{
-				bit[idx]=0;
-				idx+= (idx)&(-idx);
-			}
-		
-	}
+ll inv(ll x,ll y){
+    x+=mod;y+=mod;
+    x%=mod;y%=mod;
+    ll ret=(power(y,mod-2)%mod)*x;
+    return (ret%mod);
 }
+set <int> app[300001];
 charan
 {
 	fast;
-	ll maxi=0;
-	ll n,q;cin>>n>>q;
-	ll ch,x;
-	ms0(flags,false);
-	ms0(bit,0);
-	ll count=0;
+	ll n,q;
+	cin>>n>>q;
+	ll t,x;
+	ll ans=0;
+	int idx=0;
+	vector<int> v;//for storing notification bar
+	ll largest=0;
 	for(int i=1;i<=q;i++)
 	{
-		cin>>ch>>x;
-		update(x,ch,n,1);
-		maxi=max(maxi,x);
-		cout<<"###";
-		if(ch==1)
-			count++;
-		for(int i=1;i<=n;i++)
+		cin>>t>>x;
+		if(t==1)
 		{
-			cout<<bit[i]<<" ";
+			app[x].insert(idx);
+			v.pb(x);
+			idx++;
+			ans++;
 		}
-		cout<<"###"<<endl;	
-		ll sum=getsum(n);
-		ll sum2=getsum(maxi);
-		gdb(sum2);
-		if(ch==3)
-			{
-				//cout<<sum-sum2<<endl;
-				if(count>x)
-			}
+		else if(t==2)
+		{
+			ans-=app[x].size();
+			app[x].clear();
+		}
 		else
-		cout<<sum<<endl;
-		
+		{
+			ll temp=x;
+			set<int>::iterator it;
+			for(int j=largest;j<=temp-1;j++)
+			{
+				it=app[v[j]].find(j);
+				if(it!=app[v[j]].end())
+				{
+					ans--;
+					app[v[j]].erase(it);
+				}
+			}
+			if(temp>largest)
+				largest=temp;
+
+		}
+		cout<<ans<<endl;
 	}
 	return 0;
 }
